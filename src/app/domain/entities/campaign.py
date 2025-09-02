@@ -4,6 +4,7 @@ from enum import Enum
 
 from app.domain.common.exceptions import DomainError
 from app.domain.entities.subscriber import Subscriber
+from app.domain.shared.channel import ChannelType
 
 
 class CampaignStatus(str, Enum):
@@ -21,7 +22,7 @@ class Campaign:
     message_template_id: str
     schedule: datetime
     status: CampaignStatus
-    channels: list[str] = field(default_factory=list)  # email, telegram, vk
+    channels: list[ChannelType] = field(default_factory=list)
     subscribers: list[Subscriber] = field(default_factory=list)
 
 

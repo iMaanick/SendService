@@ -14,9 +14,9 @@ class SubscriberStatus(str, Enum):
 @dataclass(frozen=True, slots=True)
 class Subscriber:
     id: int
+    status: SubscriberStatus
     contacts: list[Contact] = field(default_factory=list)
     preferred_channels: list[str] = field(default_factory=list)
-    status: str = field(default=SubscriberStatus.ACTIVE)
 
 
 @dataclass(slots=True)

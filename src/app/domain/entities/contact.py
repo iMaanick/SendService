@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from enum import Enum
 
 from app.domain.common.exceptions import DomainError
 from app.domain.common.value_objects import BaseValueObject
+from app.domain.shared.channel import ChannelType
 
 
 @dataclass(slots=True)
@@ -14,10 +14,6 @@ class InvalidContactError(DomainError):
     def title(self) -> str:
         return self.text
 
-class ChannelType(str, Enum):
-    EMAIL = "email"
-    TELEGRAM = "telegram"
-    VK = "vk"
 
 @dataclass(frozen=True, slots=True)
 class Contact(BaseValueObject):

@@ -3,6 +3,7 @@ from datetime import UTC, datetime
 from enum import Enum
 
 from app.domain.common.exceptions import DomainError
+from app.domain.shared.channel import ChannelType
 
 
 class DeliveryStatus(str, Enum):
@@ -15,9 +16,9 @@ class DeliveryStatus(str, Enum):
 @dataclass(frozen=True, slots=True)
 class DeliveryLog:
     id: int
-    campaign_id: str
-    subscriber_id: str
-    channel: str
+    campaign_id: int
+    subscriber_id: int
+    channel: ChannelType
     status: DeliveryStatus
     timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))
 
