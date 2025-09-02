@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from dataclasses import dataclass
 from typing import Any, TypeVar
 
@@ -6,14 +6,13 @@ V = TypeVar("V", bound=Any)
 
 
 @dataclass(frozen=True)
-class BaseValueObject(ABC):
+class BaseValueObject:
 
     def __post_init__(self) -> None:
         self._validate()
 
-    @abstractmethod
     def _validate(self) -> None:
-        raise NotImplementedError
+        ...
 
 
 @dataclass(frozen=True)

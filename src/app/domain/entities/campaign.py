@@ -5,6 +5,7 @@ from enum import Enum
 from app.domain.common.exceptions import DomainError
 from app.domain.entities.subscriber import Subscriber
 from app.domain.shared.channel import ChannelType
+from app.domain.value_objects.campaign_id import CampaignId
 
 
 class CampaignStatus(str, Enum):
@@ -17,7 +18,7 @@ class CampaignStatus(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class Campaign:
-    id: int
+    id: CampaignId
     name: str
     message_template_id: str
     schedule: datetime

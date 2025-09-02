@@ -4,6 +4,7 @@ from enum import Enum
 
 from app.domain.common.exceptions import DomainError
 from app.domain.shared.channel import ChannelType
+from app.domain.value_objects.delivery_log_id import DeliveryLogId
 
 
 class DeliveryStatus(str, Enum):
@@ -15,7 +16,7 @@ class DeliveryStatus(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class DeliveryLog:
-    id: int
+    id: DeliveryLogId
     campaign_id: int
     subscriber_id: int
     channel: ChannelType
