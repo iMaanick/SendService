@@ -42,5 +42,9 @@ lint.ignore = [
     "PLW1641",
 ]
 
+"src/app/infrastructure/db/migrations/**" = [
+    "ALL",
+]
+
 [lint.isort]
 no-lines-before = ["local-folder"]
