@@ -16,7 +16,7 @@ class CampaignStatus(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class Campaign:
-    id: str
+    id: int
     name: str
     message_template_id: str
     schedule: datetime

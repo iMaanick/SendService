@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 from app.domain.common.exceptions import DomainError
-from app.domain.value_objects.contact import Contact
+from app.domain.entities.contact import Contact
 
 
 class SubscriberStatus(str, Enum):
@@ -13,7 +13,7 @@ class SubscriberStatus(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class Subscriber:
-    id: str
+    id: int
     contacts: list[Contact] = field(default_factory=list)
     preferred_channels: list[str] = field(default_factory=list)
     status: str = field(default=SubscriberStatus.ACTIVE)

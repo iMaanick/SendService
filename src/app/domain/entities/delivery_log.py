@@ -14,7 +14,7 @@ class DeliveryStatus(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class DeliveryLog:
-    id: str
+    id: int
     campaign_id: str
     subscriber_id: str
     channel: str
