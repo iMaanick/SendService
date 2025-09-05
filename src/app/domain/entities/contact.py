@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
+from app.domain.common.entity import BaseEntityObject
 from app.domain.common.exceptions import DomainError
-from app.domain.common.value_objects import BaseValueObject
 from app.domain.shared.channel import ChannelType
 from app.domain.value_objects.contact_id import ContactId
 
@@ -16,8 +16,8 @@ class InvalidContactError(DomainError):
         return self.text
 
 
-@dataclass(frozen=True, slots=True)
-class Contact(BaseValueObject):
+@dataclass(slots=True, frozen=True)
+class Contact(BaseEntityObject):
     id: ContactId
     contact: str
     channel: ChannelType
