@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 
-@dataclass(eq=False)
+@dataclass(slots=True, frozen=True)
 class AppError(Exception):
     status: ClassVar[int] = 500
 
@@ -11,7 +11,7 @@ class AppError(Exception):
         return "An app error occurred"
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class DomainError(AppError):
 
     @property

@@ -5,7 +5,7 @@ from typing import Any, TypeVar
 V = TypeVar("V", bound=Any)
 
 
-@dataclass(frozen=True)
+@dataclass(slots=True, frozen=True)
 class BaseValueObject:
 
     def __post_init__(self) -> None:
@@ -15,7 +15,7 @@ class BaseValueObject:
         ...
 
 
-@dataclass(frozen=True)
+@dataclass(slots=True, frozen=True)
 class ValueObject[V](BaseValueObject, ABC):
     value: V
 

@@ -28,5 +28,7 @@ dev = [
     "pytest-asyncio",
     "mypy",
     "ruff",
-    "nox==2025.05.01"
+    "nox==2025.05.01",
+    "slotscheck",
+    "pympler"
 ]

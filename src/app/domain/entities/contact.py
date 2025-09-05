@@ -6,7 +6,7 @@ from app.domain.shared.channel import ChannelType
 from app.domain.value_objects.contact_id import ContactId
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class InvalidContactError(DomainError):
     contact: str
     text: str

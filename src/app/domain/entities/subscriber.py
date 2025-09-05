@@ -20,6 +20,6 @@ class Subscriber:
     preferred_channels: list[str] = field(default_factory=list)
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class SubscriberValidationError(DomainError):
     pass

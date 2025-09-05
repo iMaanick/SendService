@@ -27,7 +27,7 @@ class Campaign:
     subscribers: list[Subscriber] = field(default_factory=list)
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class CampaignValidationError(DomainError):
     text: str
 

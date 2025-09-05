@@ -9,12 +9,12 @@ from app.domain.entities.campaign import (
 from app.domain.entities.subscriber import Subscriber
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class CampaignMissingChannelsError(CampaignValidationError):
     text: str = "Campaign must have at least one channel"
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class CampaignInvalidScheduleError(CampaignValidationError):
     text: str = "Campaign schedule must be in the future"
 

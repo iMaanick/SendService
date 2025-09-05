@@ -14,7 +14,7 @@ class DeliveryStatus(str, Enum):
     FAILED = "failed"
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(slots=True, frozen=True)
 class DeliveryLog:
     id: DeliveryLogId
     campaign_id: int
@@ -24,6 +24,6 @@ class DeliveryLog:
     timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, frozen=True)
 class DeliveryLogError(DomainError):
     pass
