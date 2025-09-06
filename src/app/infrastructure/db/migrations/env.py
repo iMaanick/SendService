@@ -3,7 +3,6 @@ import sys
 from logging.config import fileConfig
 
 from alembic import context
-from alembic.script import ScriptDirectory
 from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
@@ -12,21 +11,12 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from app.bootstrap.configs import load_database_config
 from app.infrastructure.db.models.base import mapper_registry
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
-config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-
 if sys.platform.startswith("win"):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-target_metadata = mapper_registry.metadata
+# this is the Alembic Config object, which provides
+# access to the values within the .ini file in use.
+config = context.config
 
 
 def get_url() -> str:
@@ -36,30 +26,22 @@ def get_url() -> str:
     return database_config.uri
 
 
-def process_revision_directives(context, revision, directives):
-    # extract Migration
-    migration_script = directives[0]
-    # extract current head revision
-    head_revision = ScriptDirectory.from_config(
-        context.config,
-    ).get_current_head()
-
-    if head_revision is None:
-        # edge case with first migration
-        new_rev_id = 1
-    else:
-        # default branch with incrementation
-        last_rev_id = int(head_revision.lstrip("0"))
-        new_rev_id = last_rev_id + 1
-    # fill zeros up to 5 digits: 1 -> 00001
-    migration_script.rev_id = f"{new_rev_id:05}"
-    migration_script.filename = (
-        f"{migration_script.rev_id}_{migration_script.message}.py"
-    )
+db_uri = get_url()
+config.set_main_option('sqlalchemy.url', db_uri)
+# Interpret the config file for Python logging.
+# This line sets up loggers basically.
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
+# add your model's MetaData object here
+# for 'autogenerate' support
+# from myapp import mymodel
+# target_metadata = mymodel.Base.metadata
+target_metadata = mapper_registry.metadata
 
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
+# my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
 
@@ -75,8 +57,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = get_url()
-
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -89,36 +70,28 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
-    context.configure(
-        connection=connection,
-        target_metadata=target_metadata,
-        process_revision_directives=process_revision_directives,
-    )
+    context.configure(connection=connection, target_metadata=target_metadata)
 
     with context.begin_transaction():
         context.run_migrations()
 
 
 async def run_async_migrations() -> None:
-    """
-    In this scenario we need to create an Engine
+    """In this scenario we need to create an Engine
     and associate a connection with the context.
+
     """
 
-    configuration = config.get_section(config.config_ini_section)
-    if configuration:
-        configuration["sqlalchemy.url"] = get_url()
+    connectable = async_engine_from_config(
+        config.get_section(config.config_ini_section, {}),
+        prefix="sqlalchemy.",
+        poolclass=pool.NullPool,
+    )
 
-        connectable = async_engine_from_config(
-            configuration,
-            prefix="sqlalchemy.",
-            poolclass=pool.NullPool,
-        )
+    async with connectable.connect() as connection:
+        await connection.run_sync(do_run_migrations)
 
-        async with connectable.connect() as connection:
-            await connection.run_sync(do_run_migrations)
-
-        await connectable.dispose()
+    await connectable.dispose()
 
 
 def run_migrations_online() -> None:

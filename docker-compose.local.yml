@@ -1,7 +1,7 @@
 services:
   db:
     container_name: persistence
-    image: postgis/postgis:14-3.5-alpine
+    image: postgres:16
     env_file:
       - .env
     environment:
