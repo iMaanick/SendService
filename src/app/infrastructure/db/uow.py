@@ -1,15 +1,15 @@
 from dataclasses import dataclass
 
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.application.common.exceptions import CommitError, FlushError
 from app.application.common.ports.uow import UoW
+from app.infrastructure.db.types import MainAsyncSession
 
 
 @dataclass(slots=True, frozen=True)
 class SQLAlchemyUoW(UoW):
-    session: AsyncSession
+    session: MainAsyncSession
 
     async def commit(self) -> None:
         try:

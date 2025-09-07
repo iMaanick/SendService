@@ -19,7 +19,8 @@ dependencies = [
     "alembic>=1.16.5",
     "sqlalchemy>=2.0.43",
     "psycopg[binary]",
-    "python-dotenv"
+    "python-dotenv",
+    "dishka"
 ]
 [project.optional-dependencies]
 dev = [
