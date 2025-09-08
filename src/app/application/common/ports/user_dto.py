@@ -1,10 +1,13 @@
 from dataclasses import dataclass
 
+from app.domain.shared.user_role import UserRole
+from app.domain.value_objects.user_password_hash import UserPasswordHash
+from app.domain.value_objects.username import Username
+
 
 @dataclass(slots=True, frozen=True)
 class CreateUser:
-    user_id: int
-    username: str
-    first_name: str
-    last_name: str
-    middle_name: str | None
+    username: Username
+    password_hash: UserPasswordHash
+    role: UserRole
+    is_active: bool

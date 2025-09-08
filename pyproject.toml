@@ -20,7 +20,8 @@ dependencies = [
     "sqlalchemy>=2.0.43",
     "psycopg[binary]",
     "python-dotenv",
-    "dishka"
+    "dishka",
+    "bcrypt"
 ]
 [project.optional-dependencies]
 dev = [
