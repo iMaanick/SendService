@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.application.common.exceptions import CommitError, FlushError
+from app.application.common.exceptions.ports import CommitError, FlushError
 from app.application.common.ports.uow import UoW
 from app.infrastructure.db.types import MainAsyncSession
 
