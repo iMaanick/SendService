@@ -49,3 +49,42 @@ def load_database_config() -> DatabaseConfig:
         user=user,
         password=password,
     )
+
+
+@dataclass
+class MissingPasswordConfigError(ValueError):
+
+    @property
+    def title(self) -> str:
+        return "Password environment variables are missing"
+
+
+@dataclass(frozen=True)
+class PasswordConfig:
+    pepper: str
+
+
+def load_password_config() -> PasswordConfig:
+    pepper = environ.get("PEPPER")
+
+    if pepper is None:
+        raise MissingPasswordConfigError
+
+    return PasswordConfig(
+        pepper=pepper,
+    )
+
+
+@dataclass(frozen=True)
+class Config:
+    database: DatabaseConfig
+    password: PasswordConfig
+
+
+def load_settings() -> Config:
+    database = load_database_config()
+    password = load_password_config()
+    return Config(
+        database=database,
+        password=password,
+    )
