@@ -11,5 +11,8 @@ class AppConfigProvider(Provider):
     password = from_context(PasswordConfig)
 
     @provide
-    def provide_password_pepper(self, config: PasswordConfig) -> PasswordPepper:
+    def provide_password_pepper(
+            self,
+            config: PasswordConfig,
+    ) -> PasswordPepper:
         return PasswordPepper(config.pepper)

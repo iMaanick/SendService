@@ -2,7 +2,7 @@ import logging
 
 from dishka import AsyncContainer, make_async_container
 
-from app.bootstrap.configs import DatabaseConfig, Config, PasswordConfig
+from app.bootstrap.configs import Config, DatabaseConfig, PasswordConfig
 from app.bootstrap.ioc.application import ApplicationProvider
 from app.bootstrap.ioc.config import AppConfigProvider
 from app.bootstrap.ioc.domain import DomainProvider
