@@ -21,7 +21,8 @@ dependencies = [
     "psycopg[binary]",
     "python-dotenv",
     "dishka",
-    "bcrypt"
+    "bcrypt",
+    "adaptix[sqlalchemy]==3.0.0b11"
 ]
 [project.optional-dependencies]
 dev = [

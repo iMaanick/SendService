@@ -9,7 +9,7 @@ from app.domain.value_objects.username import Username
 
 class UserGateway(Protocol):
     @abstractmethod
-    def add(self, user: CreateUser) -> User:
+    async def add(self, user: CreateUser) -> User:
         raise NotImplementedError
 
     @abstractmethod

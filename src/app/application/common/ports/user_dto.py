@@ -5,7 +5,7 @@ from app.domain.value_objects.user_password_hash import UserPasswordHash
 from app.domain.value_objects.username import Username
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class CreateUser:
     username: Username
     password_hash: UserPasswordHash

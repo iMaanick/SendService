@@ -35,7 +35,7 @@ class SignUpUseCase:
 
         new_user = self.user_factory.create_user(username, password)
 
-        user = self.user_gateway.add(new_user)
+        user = await self.user_gateway.add(new_user)
 
         await self.uow.commit()
 
