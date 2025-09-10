@@ -10,5 +10,5 @@ from_orm_retort = ConversionRetort(
         coercer(int, UserId, lambda x: UserId(x)),
         coercer(str, Username, lambda x: Username(x)),
         coercer(bytes, UserPasswordHash, lambda x: UserPasswordHash(x)),
-    ]
+    ],
 )
