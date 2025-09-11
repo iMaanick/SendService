@@ -1,5 +1,5 @@
 from app.application.common.ports.user_dto import CreateUser
-from app.domain.common.exceptions import RoleAssignmentNotPermittedError
+from app.domain.exceptions.user import RoleAssignmentNotPermittedError
 from app.domain.ports.password_hasher import PasswordHasher
 from app.domain.shared.user_role import UserRole
 from app.domain.value_objects.raw_password import RawPassword

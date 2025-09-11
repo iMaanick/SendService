@@ -8,16 +8,20 @@ from app.bootstrap.ioc.converters import (
     Src_contra,
     ToOrmConverter,
 )
+from app.infrastructure.db.flusher_sqla import SqlaMainFlusher
 from app.infrastructure.db.mappers.from_orm import from_orm_retort
 from app.infrastructure.db.mappers.to_orm import dto_to_orm_retort
-from app.infrastructure.db.uow import SQLAlchemyUoW
+from app.infrastructure.db.transaction_manager_sqla import (
+    SqlaTransactionManager,
+)
 from app.infrastructure.db.user_gateway import UserSQLGateway
 
 
 class ApplicationProvider(Provider):
     gateways = provide_all(
         WithParents[UserSQLGateway],
-        WithParents[SQLAlchemyUoW],
+        WithParents[SqlaTransactionManager],
+        WithParents[SqlaMainFlusher],
         scope=Scope.REQUEST,
     )
 

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from app.application.common.ports.flusher import Flusher
 from app.application.common.ports.user_dto import CreateUser
 from app.application.common.ports.user_gateway import UserGateway
 from app.bootstrap.ioc.converters import FromOrmConverter, ToOrmConverter
@@ -15,11 +16,12 @@ class UserSQLGateway(UserGateway):
     session: MainAsyncSession
     map_to_orm: ToOrmConverter[CreateUser, UserORM]
     map_to_domain: FromOrmConverter[UserORM, User]
+    flusher: Flusher
 
     async def add(self, user: CreateUser) -> User:
         user_record = self.map_to_orm(user)
         self.session.add(user_record)
-        await self.session.flush()
+        await self.flusher.flush()
         return self.map_to_domain(user_record)
 
     async def read_by_id(self, user_id: UserId) -> User | None:

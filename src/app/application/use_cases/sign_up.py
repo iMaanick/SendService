@@ -2,7 +2,7 @@ import logging
 from dataclasses import dataclass
 
 from app.application.common.factories.user import UserFactory
-from app.application.common.ports.uow import UoW
+from app.application.common.ports.transactionmanager import TransactionManager
 from app.application.common.ports.user_gateway import UserGateway
 from app.domain.value_objects.raw_password import RawPassword
 from app.domain.value_objects.username import Username
@@ -25,7 +25,7 @@ class SignUpResponse:
 class SignUpUseCase:
     user_factory: UserFactory
     user_gateway: UserGateway
-    uow: UoW
+    uow: TransactionManager
 
     async def __call__(self, request_data: SignUpRequest) -> SignUpResponse:
         logger.info("Sign up: started. Username: '%s'.", request_data.username)
