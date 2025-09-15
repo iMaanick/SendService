@@ -1,9 +1,9 @@
-from .base import BaseModel  # isort: skip
-from .auth_session import AuthSessionORM
-from .user import UserORM
+from .base import metadata  # isort: skip
+from .auth_session import auth_sessions_table
+from .user import users_table
 
 __all__ = (
-    "AuthSessionORM",
-    "BaseModel",
-    "UserORM",
+    "metadata",
+    "auth_sessions_table",
+    "users_table",
 )

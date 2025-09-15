@@ -9,7 +9,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.bootstrap.configs import load_database_config
-from app.infrastructure.db.models.base import mapper_registry
+from app.infrastructure.db.models import metadata
 
 if sys.platform.startswith("win"):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -36,7 +36,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = mapper_registry.metadata
+target_metadata = metadata
 
 
 # other values from the config, defined by the needs of env.py,

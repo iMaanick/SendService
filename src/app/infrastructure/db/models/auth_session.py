@@ -1,21 +1,11 @@
-import datetime
+from sqlalchemy import BigInteger, DateTime, ForeignKey, String, Table, Column
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, String
-from sqlalchemy.orm import Mapped, mapped_column
+from app.infrastructure.db.models.base import metadata
 
-from app.infrastructure.db.models import BaseModel
-
-
-class AuthSessionORM(BaseModel):
-    __tablename__ = "auth_sessions"
-
-    id: Mapped[str] = mapped_column(String, primary_key=True)
-    user_id: Mapped[int] = mapped_column(
-        BigInteger,
-        ForeignKey("users.id", ondelete="CASCADE"),
-        nullable=False,
-    )
-    expiration: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True),
-        nullable=False,
-    )
+auth_sessions_table = Table(
+    "auth_sessions",
+    metadata,
+    Column("id", String, primary_key=True),
+    Column("user_id", BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False),
+    Column("expiration", DateTime(timezone=True), nullable=False),
+)
