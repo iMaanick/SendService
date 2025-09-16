@@ -1,10 +1,8 @@
-from dishka import Provider, Scope, WithParents, provide, provide_all
+from dishka import Provider, Scope, WithParents, provide_all
 
 from app.application.common.factories.user import UserFactory
 from app.application.use_cases.sign_up import SignUpUseCase
 from app.infrastructure.db.flusher_sqla import SqlaMainFlusher
-from app.infrastructure.db.mappers.from_orm import from_orm_retort
-from app.infrastructure.db.mappers.to_orm import dto_to_orm_retort
 from app.infrastructure.db.transaction_manager_sqla import (
     SqlaTransactionManager,
 )

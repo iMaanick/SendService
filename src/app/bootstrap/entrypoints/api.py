@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from app.bootstrap.configs import load_settings
 from app.bootstrap.ioc.containers import fastapi_container
 from app.bootstrap.logger import setup_logging
+from app.infrastructure.db.mappers.base_retort import base_retort
 from app.presentation.api.root import root_router
 
 
@@ -26,6 +27,6 @@ def create_app() -> FastAPI:
     app = FastAPI(lifespan=lifespan)
     init_routers(app)
     config = load_settings()
-    container = fastapi_container(config)
+    container = fastapi_container(config, base_retort)
     setup_dishka(container=container, app=app)
     return app

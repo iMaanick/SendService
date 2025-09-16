@@ -2,7 +2,8 @@ import logging
 from collections.abc import AsyncIterable, AsyncIterator
 from typing import cast
 
-from dishka import Provider, Scope, provide
+from adaptix import Retort
+from dishka import Provider, Scope, from_context, provide
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -16,8 +17,10 @@ from app.infrastructure.db.types import MainAsyncSession
 logger = logging.getLogger(__name__)
 
 
-class PersistenceProvider(Provider):
+class InfrastructureProvider(Provider):
     scope = Scope.REQUEST
+
+    base_retort = from_context(Retort, scope=Scope.APP)
 
     @provide(scope=Scope.APP)
     async def engine(
@@ -46,3 +49,9 @@ class PersistenceProvider(Provider):
     ) -> AsyncIterable[MainAsyncSession]:
         async with factory() as session:
             yield cast(MainAsyncSession, session)
+
+    @provide(scope=Scope.APP)
+    async def get_retort(
+            self, base_retort: Retort,
+    ) -> Retort:
+        return base_retort
